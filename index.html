@@ -1,164 +1,374 @@
 <!DOCTYPE html>
-<html lang="en">
-
+<html lang="en" class="scroll-smooth">
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <link rel="icon" href="assets/images/favicon.ico" sizes="any">
-    <link rel="preconnect" href="https://fonts.googleapis.com">
-    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-    <link
-        href="https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:ital,wght@0,200..800;1,200..800&family=Poppins:ital,wght@0,100;0,200;0,300;0,400;0,500;0,600;0,700;0,800;0,900;1,100;1,200;1,300;1,400;1,500;1,600;1,700;1,800;1,900&display=swap"
-        rel="stylesheet">
-    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/animate.css/4.1.1/animate.min.css" />
-    <link rel="stylesheet" href="assets/css/style.css">
-    <script src="https://unpkg.com/feather-icons"></script>
-    <script src="https://cdnjs.cloudflare.com/ajax/libs/wow/1.1.2/wow.min.js"></script>
-    <title>BinDev Portfolio</title>
+    <title>Dev & Dreamer | Personal Portfolio & Journal</title>
+    <script src="https://cdn.tailwindcss.com"></script>
+    <script defer src="https://unpkg.com/alpinejs@3.x.x/dist/cdn.min.js"></script>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <script>
+        tailwind.config = {
+            theme: {
+                extend: {
+                    colors: {
+                        coffee: '#FFDD00',
+                        brand: {
+                            50: '#eef2ff',
+                            400: '#60a5fa',
+                            500: '#3b82f6',
+                            600: '#2563eb',
+                            900: '#1e3a8a',
+                            950: '#0f172a',
+                        },
+                        navy: {
+                            800: '#1e293b',
+                            900: '#0f172a',
+                            950: '#020617',
+                        }
+                    },
+                    animation: {
+                        'bounce-slow': 'bounce 4s linear infinite',
+                        'fade-in': 'fadeIn 0.6s ease-out forwards',
+                    },
+                    keyframes: {
+                        fadeIn: {
+                            '0%': { opacity: '0', transform: 'translateY(15px)' },
+                            '100%': { opacity: '1', transform: 'translateY(0)' },
+                        }
+                    }
+                }
+            }
+        }
+    </script>
+    <style>
+        .hobby-card:hover .hobby-icon {
+            transform: scale(1.15) rotate(-6deg);
+        }
+    </style>
 </head>
+<body class="bg-navy-950 text-slate-300 font-sans antialiased selection:bg-brand-500 selection:text-white" x-data="{ activeTab: 'home', mobileMenu: false }">
 
-<body>
-    <header>
-        <div class="container">
-            <a href="/" class="site-logo wow animate__animated animate__fadeIn"><img src="assets/images/site-logo.png"
-                    alt="Site Logo"></a>
+    <nav class="sticky top-0 z-50 bg-navy-950/80 backdrop-blur-md border-b border-slate-800/60 transition-all duration-300">
+        <div class="max-w-6xl mx-auto px-4 sm:px-6 lg:px-8">
+            <div class="flex items-center justify-between h-16">
+                <div class="flex-shrink-0 cursor-pointer" @click="activeTab = 'home'; window.scrollTo(0,0)">
+                    <span class="text-xl font-bold tracking-tight bg-gradient-to-r from-blue-400 to-indigo-400 bg-clip-text text-transparent">
+                        &lt;bin.dev /&gt;
+                    </span>
+                </div>
+                
+                <div class="hidden md:flex items-center space-x-8">
+                    <button @click="activeTab = 'home'" :class="activeTab === 'home' ? 'text-blue-400 font-semibold' : 'text-slate-400 hover:text-blue-400'" class="transition-colors duration-200 py-2">Home</button>
+                    <button @click="activeTab = 'journal'" :class="activeTab === 'journal' ? 'text-blue-400 font-semibold' : 'text-slate-400 hover:text-blue-400'" class="transition-colors duration-200 py-2">Journal</button>
+                    <button @click="activeTab = 'contact'" :class="activeTab === 'contact' ? 'text-blue-400 font-semibold' : 'text-slate-400 hover:text-blue-400'" class="transition-colors duration-200 py-2">Contact</button>
+                    
+                    <a href="https://www.buymeacoffee.com" target="_blank" class="inline-flex items-center gap-2 bg-blue-600 text-white px-4 py-2 rounded-full font-bold text-sm shadow-md hover:brightness-110 hover:-translate-y-0.5 transition-all duration-200">
+                        <i class="fa-brands fa-hire-a-helper text-white"></i> Hire Me
+                    </a>
+                </div>
 
-            <ul class="menu wow animate__animated animate__fadeIn">
-                <li><a href="#home" class="active">Home</a></li>
-                <li><a href="#project">Projects</a></li>
-                <li><a href="#experience">Experience</a></li>
-                <li><a href="#contact">Contact</a></li>
-            </ul>
+                <div class="md:hidden flex items-center gap-4">
+                    <a href="https://www.buymeacoffee.com" target="_blank" class="inline-flex items-center gap-2 bg-blue-600 text-white px-3 py-1.5 rounded-full font-bold text-xs shadow-sm">
+                        <i class="fa-brands fa-hire-a-helper"></i>
+                    </a>
+                    <button @click="mobileMenu = !mobileMenu" class="text-slate-400 hover:text-white focus:outline-none">
+                        <i class="fa-solid text-xl" :class="mobileMenu ? 'fa-times' : 'fa-bars'"></i>
+                    </button>
+                </div>
+            </div>
         </div>
-    </header>
 
-    <main>
-        <section id="home" class="about-block">
-            <div class="container">
-                <span class="profile-image wow animate__animated animate__fadeIn">
-                    <img src="assets/images/avatar.png" alt="Profile Image">
-                </span>
+        <div x-show="mobileMenu" x-transition class="md:hidden bg-navy-900 border-b border-slate-800 px-4 pt-2 pb-4 space-y-2">
+            <button @click="activeTab = 'home'; mobileMenu = false; window.scrollTo(0,0)" class="block w-full text-left px-3 py-2 rounded-md text-base font-medium text-slate-300 hover:bg-slate-800 hover:text-blue-400">Home</button>
+            <button @click="activeTab = 'journal'; mobileMenu = false; window.scrollTo(0,0)" class="block w-full text-left px-3 py-2 rounded-md text-base font-medium text-slate-300 hover:bg-slate-800 hover:text-blue-400">Journal</button>
+            <button @click="activeTab = 'contact'; mobileMenu = false; window.scrollTo(0,0)" class="block w-full text-left px-3 py-2 rounded-md text-base font-medium text-slate-300 hover:bg-slate-800 hover:text-blue-400">Contact</button>
+        </div>
+    </nav>
 
-                <h2 class="wow animate__animated animate__fadeInUp">I do code and<br />make content <span
-                        class="gradient-text">about it!</span></h2>
+    <main class="min-h-[calc(100vh-16rem)]">
 
-                <p class="wow animate__animated animate__fadeInUp">I am a seasoned full-stack software engineer with
-                    over
-                    8 years of professional experience, specializing in backend development.
-                    My expertise lies in crafting robust and scalable SaaS-based
-                    architectures on the Amazon AWS platform.</p>
-
-                <div class="btn-wrap">
-                    <a href="#" class="btn btn--light btn--bg wow animate__animated animate__fadeInLeft">Get in
-                        Touch</a>
-                    <a href="#" class="btn btn--light btn--outline wow animate__animated animate__fadeInRight">Download
-                        CV</a>
-                </div>
-            </div>
-        </section>
-
-        <section class="expertise-block">
-            <div class="container">
-                <h3 class="wow animate__animated animate__fadeInUp">EXPERTISE WITH</h3>
-                <div class="expertises wow animate__animated animate__fadeInUp">
-                    <img src="assets/images/javascript.png" alt="JavaScript">
-                    <img src="assets/images/nodejs.png" alt="JavaScript">
-                    <img src="assets/images/html.png" alt="JavaScript">
-                    <img src="assets/images/css.png" alt="JavaScript">
-                    <img src="assets/images/reactjs.png" alt="JavaScript">
-                </div>
-            </div>
-        </section>
-
-        <section id="project" class="projects-block">
-            <div class="container">
-                <h2 class="wow animate__animated animate__fadeInUp">PROJECTS</h2>
-
-                <ul class="projects wow animate__animated animate__fadeInUp">
-                    <li>
-                        <a href="#">
-                            <img src="assets/images/project1.jpg" alt="Vintage Car">
-                            <div class="content">
-                                <span>CLICK HERE TO VISIT</span>
-                                <h3>HTML Tutorial</h3>
+        <div x-show="activeTab === 'home'" x-transition.opacity.duration.300ms class="animate-fade-in">
+            
+            <section class="relative overflow-hidden bg-gradient-to-b from-navy-950 via-navy-900 to-navy-950 py-20 lg:py-32">
+                <div class="max-w-6xl mx-auto px-4 sm:px-6 lg:px-8 relative z-10">
+                    <div class="grid grid-cols-1 lg:grid-cols-12 gap-12 items-center">
+                        <div class="lg:col-span-7 text-center lg:text-left">
+                            <span class="inline-flex items-center gap-1.5 px-3 py-1 rounded-full text-sm font-medium bg-blue-950/60 border border-blue-800/50 text-blue-300 mb-6">
+                                <span class="w-2 h-2 rounded-full bg-blue-400 animate-ping"></span> Available for projects
+                            </span>
+                            <h1 class="text-4xl sm:text-5xl lg:text-6xl font-extrabold text-white tracking-tight leading-tight mb-6">
+                                I <span class="bg-gradient-to-r from-blue-400 to-cyan-400 bg-clip-text text-transparent">build</span> for the Web</span><br/>
+                                & <span class="bg-gradient-to-r from-blue-400 to-cyan-400 bg-clip-text text-transparent">live</span> for the in-betweeens.
+                            </h1>
+                            <p class="text-lg text-slate-400 max-w-xl mx-auto lg:mx-0 mb-8 leading-relaxed">
+                                I'm a professional Web Developer who thrives on clean lines of code, but lives for rugged trails, capturing frames, turning pages, and hitting the futsal pitch. 
+                            </p>
+                            <div class="flex flex-col sm:flex-row justify-center lg:justify-start gap-4">
+                                <button @click="activeTab = 'journal'" class="px-6 py-3 bg-blue-600 text-white font-medium rounded-xl hover:bg-blue-500 shadow-lg shadow-blue-600/20 hover:shadow-blue-600/30 -translate-y-0.5 active:translate-y-0 transition-all duration-150">
+                                    Read My Journal <i class="fa-solid fa-arrow-right ml-2 text-sm"></i>
+                                </button>
+                                <button @click="activeTab = 'contact'" class="px-6 py-3 bg-navy-900 text-slate-300 font-medium rounded-xl border border-slate-800 hover:bg-slate-800 transition-colors duration-150">
+                                    Let's Connect
+                                </button>
                             </div>
-                        </a>
-                    </li>
-                    <li>
-                        <a href="#">
-                            <img src="assets/images/project2.jpg" alt="Vintage Camera">
-                            <div class="content">
-                                <span>CLICK HERE TO VISIT</span>
-                                <h3>CSS Tutorial</h3>
+                        </div>
+                        
+                        <div class="lg:col-span-5 relative flex justify-center">
+                            <div class="relative w-72 h-72 sm:w-80 sm:h-80 md:w-96 md:h-96">
+                                <div class="absolute inset-0 bg-gradient-to-tr from-blue-600 to-indigo-600 rounded-3xl rotate-6 scale-95 opacity-20 blur-2xl animate-bounce-slow"></div>
+                                <div class="absolute inset-0 bg-navy-900 p-4 rounded-3xl shadow-2xl border border-slate-800 rotate-[-2deg] hover:rotate-0 transition-transform duration-500">
+                                    <div class="w-full h-full bg-slate-950 rounded-2xl overflow-hidden flex flex-col justify-between p-6 text-cyan-400 font-mono text-sm shadow-inner">
+                                        <div>
+                                            <p class="text-slate-600">// Personal Stack</p>
+                                            <p><span class="text-pink-400">const</span> hobbyist = {</p>
+                                            <p class="pl-4">role: <span class="text-amber-300">"Web Developer"</span>,</p>
+                                            <p class="pl-4">loves: [<span class="text-amber-300">"Cycling"</span>, <span class="text-amber-300">"Books"</span>, <span class="text-amber-300">"Futsal"</span>],</p>
+                                            <p class="pl-4">camera: <span class="text-amber-300">"Mirrorless"</span></p>
+                                            <p>};</p>
+                                        </div>
+                                        <div class="text-right text-slate-600 text-xs">
+                                            Status: Active Outdoor ☕
+                                        </div>
+                                    </div>
+                                </div>
                             </div>
-                        </a>
-                    </li>
-                </ul>
-            </div>
-        </section>
+                        </div>
+                    </div>
+                </div>
+            </section>
 
-        <section id="experience" class="experience-block">
-            <div class="container">
-                <h2 class="wow animate__animated animate__fadeInUp">EXPERIENCE</h2>
-                <ul class="experiences">
-                    <li class="wow animate__animated animate__fadeInUp">
-                        <div class="info">
-                            <img src="assets/images/google-logo.png" alt="Google">
-                            <h3>Lead Software Engineer at Google</h3>
-                            <span>Nov 2019 - Present</span>
+            <section class="py-20 bg-navy-900/60 border-y border-slate-800/50">
+                <div class="max-w-4xl mx-auto px-4 sm:px-6 lg:px-8 text-center">
+                    <h2 class="text-3xl font-bold text-white mb-6">Behind the Code</h2>
+                    <p class="text-xl text-slate-300 leading-relaxed mb-6">
+                        For over half a decade, I've specialized in constructing robust web backends and highly interactive UI architectures. Turning complex logic into seamless experiences is my professional sweet spot.
+                    </p>
+                    <p class="text-lg text-slate-400 leading-relaxed">
+                        However, I strongly believe that full-stack developers shouldn't just exist inside servers and terminals. My creative energy is recharged entirely outside of the browser window. Keeping my lifestyle multi-dimensional keeps my code sharp, innovative, and intentional.
+                    </p>
+                </div>
+            </section>
+
+            <section class="py-20 bg-navy-950">
+                <div class="max-w-6xl mx-auto px-4 sm:px-6 lg:px-8">
+                    <div class="text-center max-w-2xl mx-auto mb-16">
+                        <h2 class="text-3xl font-bold text-white mb-4">Off-Screen Passions</h2>
+                        <p class="text-slate-400">The core activities that break the monotony of continuous compiles and merge conflicts.</p>
+                    </div>
+
+                    <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-6">
+                        <div class="bg-navy-900/40 p-6 rounded-2xl border border-slate-800/80 shadow-md hover:border-slate-700 transition-all duration-300 hobby-card flex flex-col justify-between">
+                            <div>
+                                <div class="w-12 h-12 rounded-xl bg-amber-950/60 text-amber-400 border border-amber-800/50 flex items-center justify-center text-xl font-semibold mb-6 transition-transform duration-300 hobby-icon">
+                                    <i class="fa-solid fa-book-open"></i>
+                                </div>
+                                <h3 class="text-xl font-bold text-white mb-2">Avid Reading</h3>
+                                <p class="text-slate-400 text-sm leading-relaxed">
+                                    Consuming literature across behavioral psychology, financial engineering, and macro habit formation setups. 
+                                </p>
+                            </div>
+                            <span class="text-xs font-medium text-amber-300 mt-4 bg-amber-950/60 border border-amber-900/50 px-2 py-1 rounded inline-self-start w-max">Current: Atomic Habits</span>
                         </div>
-                        <p class="content">As a Senior Software Engineer at Google, I played a pivotal role in
-                            developing innovative solutions for Google's core search algorithms. Collaborating with a
-                            dynamic team of engineers, I contributed to the enhancement of search accuracy and
-                            efficiency, optimizing user experiences for millions of users worldwide.</p>
-                    </li>
-                    <li class="wow animate__animated animate__fadeInUp">
-                        <div class="info">
-                            <img src="assets/images/apple-logo.png" alt="Google">
-                            <h3>Junior Software Engineer at Apple</h3>
-                            <span>Jan 2017 - Oct 2019</span>
+
+                        <div class="bg-navy-900/40 p-6 rounded-2xl border border-slate-800/80 shadow-md hover:border-slate-700 transition-all duration-300 hobby-card flex flex-col justify-between">
+                            <div>
+                                <div class="w-12 h-12 rounded-xl bg-sky-950/60 text-sky-400 border border-sky-800/50 flex items-center justify-center text-xl font-semibold mb-6 transition-transform duration-300 hobby-icon">
+                                    <i class="fa-solid fa-bicycle"></i>
+                                </div>
+                                <h3 class="text-xl font-bold text-white mb-2">Endurance Cycling</h3>
+                                <p class="text-slate-400 text-sm leading-relaxed">
+                                    Taking off on long weekend trails to reset perspective. Perfect cadence meets clear thoughts.
+                                </p>
+                            </div>
+                            <span class="text-xs font-medium text-sky-300 mt-4 bg-sky-950/60 border border-sky-900/50 px-2 py-1 rounded inline-self-start w-max">Weekly Goal: 40 KM</span>
                         </div>
-                        <p class="content">During my tenure at Apple, I held the role of Software Architect, where I
-                            played a key role in shaping the architecture of mission-critical software projects.
-                            Responsible for designing scalable and efficient systems, I provided technical leadership to
-                            a cross-functional team.</p>
-                    </li>
-                    <li class="wow animate__animated animate__fadeInUp">
-                        <div class="info">
-                            <img src="assets/images/meta-logo.png" alt="Google">
-                            <h3>Software Engineer at Meta</h3>
-                            <span>Jan 2016 - Dec 2017</span>
+
+                        <div class="bg-navy-900/40 p-6 rounded-2xl border border-slate-800/80 shadow-md hover:border-slate-700 transition-all duration-300 hobby-card flex flex-col justify-between">
+                            <div>
+                                <div class="w-12 h-12 rounded-xl bg-emerald-950/60 text-emerald-400 border border-emerald-800/50 flex items-center justify-center text-xl font-semibold mb-6 transition-transform duration-300 hobby-icon">
+                                    <i class="fa-solid fa-ranking-star"></i>
+                                </div>
+                                <h3 class="text-xl font-bold text-white mb-2">Futsal Matches</h3>
+                                <p class="text-slate-400 text-sm leading-relaxed">
+                                    High-intensity teamwork, fast strategy, and tactical recreation on the pitch with local clubs.
+                                </p>
+                            </div>
+                            <span class="text-xs font-medium text-emerald-300 mt-4 bg-emerald-950/60 border border-emerald-900/50 px-2 py-1 rounded inline-self-start w-max">Position: Midfield</span>
                         </div>
-                        <p class="content">At Meta, I served as a Software Engineer, focusing on the design and
-                            implementation of backend systems for the social media giant's dynamic platform. Working on
-                            projects that involved large-scale data processing and user engagement features, I leveraged
-                            my expertise to ensure seamless functionality and scalability.</p>
-                    </li>
-                </ul>
+
+                        <div class="bg-navy-900/40 p-6 rounded-2xl border border-slate-800/80 shadow-md hover:border-slate-700 transition-all duration-300 hobby-card flex flex-col justify-between">
+                            <div>
+                                <div class="w-12 h-12 rounded-xl bg-purple-950/60 text-purple-400 border border-purple-800/50 flex items-center justify-center text-xl font-semibold mb-6 transition-transform duration-300 hobby-icon">
+                                    <i class="fa-solid fa-camera"></i>
+                                </div>
+                                <h3 class="text-xl font-bold text-white mb-2">Photography</h3>
+                                <p class="text-slate-400 text-sm leading-relaxed">
+                                    Capturing candid interactions, shifting geometric shadow layers, and visual narratives in modern urban spots.
+                                </p>
+                            </div>
+                            <span class="text-xs font-medium text-purple-300 mt-4 bg-purple-950/60 border border-purple-900/50 px-2 py-1 rounded inline-self-start w-max">Gear: 50mm Prime</span>
+                        </div>
+                    </div>
+                </div>
+            </section>
+        </div>
+
+
+        <div x-show="activeTab === 'journal'" x-transition.opacity.duration.300ms class="max-w-4xl mx-auto px-4 sm:px-6 lg:px-8 py-16 animate-fade-in">
+            <div class="text-center mb-16">
+                <h1 class="text-4xl font-extrabold text-white tracking-tight mb-4">The Digital Journal</h1>
+                <p class="text-lg text-slate-400">A timeline of field notes, micro-habits, technical growth charts, and life milestones.</p>
             </div>
-        </section>
+
+            <div class="space-y-8">
+                <article class="bg-navy-900/40 rounded-2xl p-6 sm:p-8 border border-slate-800/80 shadow-md hover:border-slate-700 transition-all duration-200">
+                    <div class="flex flex-wrap items-center gap-4 text-xs font-semibold text-slate-500 uppercase tracking-wider mb-4">
+                        <span>June 24, 2026</span>
+                        <span class="w-1 h-1 rounded-full bg-slate-700"></span>
+                        <span class="text-blue-400">Habit Architecture</span>
+                    </div>
+                    <h2 class="text-2xl font-bold text-white mb-3 hover:text-blue-400 transition-colors duration-150 cursor-pointer">
+                        Micro-Habits: Why Consistency Outperforms Peak Intensity Every Time
+                    </h2>
+                    <p class="text-slate-400 leading-relaxed mb-4">
+                        We often set massive goals—like building an entire SaaS product over a weekend or reading two complex books a week. After analyzing my own patterns, I've realized that micro-habits (like writing exactly 3 lines of structured code or reading just 5 pages every morning) yield incredibly higher long-term compounding returns...
+                    </p>
+                    <div class="flex items-center justify-between">
+                        <span class="text-sm font-medium text-slate-500">4 min read</span>
+                        <button class="text-blue-400 hover:text-blue-300 font-semibold text-sm flex items-center gap-1">Read article <i class="fa-solid fa-angle-right text-xs"></i></button>
+                    </div>
+                </article>
+
+                <article class="bg-navy-900/40 rounded-2xl p-6 sm:p-8 border border-slate-800/80 shadow-md hover:border-slate-700 transition-all duration-200">
+                    <div class="flex flex-wrap items-center gap-4 text-xs font-semibold text-slate-500 uppercase tracking-wider mb-4">
+                        <span>May 12, 2026</span>
+                        <span class="w-1 h-1 rounded-full bg-slate-700"></span>
+                        <span class="text-purple-400">Life / Travel</span>
+                    </div>
+                    <h2 class="text-2xl font-bold text-white mb-3 hover:text-blue-400 transition-colors duration-150 cursor-pointer">
+                        Chasing Shadows: A Weekend Street Photography Journal
+                    </h2>
+                    <p class="text-slate-400 leading-relaxed mb-4">
+                        Packed up my 35mm prime kit and hit the old alleys right before the golden hour split the brick pathways. Street photography is completely analogous to debugging software systems; you have to stay absolutely still, observe natural patterns, and click only when the absolute puzzle logic aligns...
+                    </p>
+                    <div class="flex items-center justify-between">
+                        <span class="text-sm font-medium text-slate-500">6 min read</span>
+                        <button class="text-blue-400 hover:text-blue-300 font-semibold text-sm flex items-center gap-1">Read article <i class="fa-solid fa-angle-right text-xs"></i></button>
+                    </div>
+                </article>
+
+                <article class="bg-navy-900/40 rounded-2xl p-6 sm:p-8 border border-slate-800/80 shadow-md hover:border-slate-700 transition-all duration-200">
+                    <div class="flex flex-wrap items-center gap-4 text-xs font-semibold text-slate-500 uppercase tracking-wider mb-4">
+                        <span>April 02, 2026</span>
+                        <span class="w-1 h-1 rounded-full bg-slate-700"></span>
+                        <span class="text-emerald-400">Fitness Strategy</span>
+                    </div>
+                    <h2 class="text-2xl font-bold text-white mb-3 hover:text-blue-400 transition-colors duration-150 cursor-pointer">
+                        Futsal Tactics That Subtly Upgraded My Daily Coding Focus
+                    </h2>
+                    <p class="text-slate-400 leading-relaxed mb-4">
+                        Futsal requires making lightning-fast decisions inside claustrophobic space configurations. This week, I recognized how drawing clean direct passing options matches the philosophy of building modular architecture in software engineering teams. Here's a structural breakdown...
+                    </p>
+                    <div class="flex items-center justify-between">
+                        <span class="text-sm font-medium text-slate-500">3 min read</span>
+                        <button class="text-blue-400 hover:text-blue-300 font-semibold text-sm flex items-center gap-1">Read article <i class="fa-solid fa-angle-right text-xs"></i></button>
+                    </div>
+                </article>
+            </div>
+        </div>
+
+
+        <div x-show="activeTab === 'contact'" x-transition.opacity.duration.300ms class="max-w-5xl mx-auto px-4 sm:px-6 lg:px-8 py-16 animate-fade-in">
+            <div class="text-center mb-16">
+                <h1 class="text-4xl font-extrabold text-white tracking-tight mb-4">Let's Work or Play</h1>
+                <p class="text-lg text-slate-400">Have an interesting web project, a book recommendation, or want to link up for futsal?</p>
+            </div>
+
+            <div class="grid grid-cols-1 lg:grid-cols-12 gap-12 bg-navy-900/50 rounded-3xl border border-slate-800/80 p-8 sm:p-12 shadow-xl">
+                <div class="lg:col-span-5 space-y-8">
+                    <div>
+                        <h3 class="text-xl font-bold text-white mb-2">Contact Details</h3>
+                        <p class="text-slate-400 text-sm">Feel free to reach out over email or look up my digital social footprints.</p>
+                    </div>
+
+                    <div class="space-y-4">
+                        <div class="flex items-center gap-4">
+                            <div class="w-10 h-10 rounded-xl bg-blue-950 text-blue-400 border border-blue-900/50 flex items-center justify-center">
+                                <i class="fa-solid fa-envelope"></i>
+                            </div>
+                            <div>
+                                <p class="text-xs font-semibold text-slate-500 uppercase tracking-wider">Drop an Email</p>
+                                <a href="mailto:hello@yourdomain.com" class="text-slate-300 hover:text-blue-400 font-medium">hello@yourdomain.com</a>
+                            </div>
+                        </div>
+
+                        <div class="flex items-center gap-4">
+                            <div class="w-10 h-10 rounded-xl bg-blue-950 text-blue-400 border border-blue-900/50 flex items-center justify-center">
+                                <i class="fa-solid fa-location-dot"></i>
+                            </div>
+                            <div>
+                                <p class="text-xs font-semibold text-slate-500 uppercase tracking-wider">Base Station</p>
+                                <p class="text-slate-300 font-medium">Kathmandu Valley, Nepal</p>
+                            </div>
+                        </div>
+                    </div>
+
+                    <div>
+                        <p class="text-xs font-semibold text-slate-500 uppercase tracking-wider mb-3">Find me on</p>
+                        <div class="flex gap-3">
+                            <a href="#" class="w-10 h-10 rounded-xl border border-slate-800 text-slate-400 flex items-center justify-center hover:bg-blue-600 hover:text-white hover:border-blue-600 transition-all duration-150"><i class="fa-brands fa-github"></i></a>
+                            <a href="#" class="w-10 h-10 rounded-xl border border-slate-800 text-slate-400 flex items-center justify-center hover:bg-blue-600 hover:text-white hover:border-blue-600 transition-all duration-150"><i class="fa-brands fa-linkedin-in"></i></a>
+                            <a href="#" class="w-10 h-10 rounded-xl border border-slate-800 text-slate-400 flex items-center justify-center hover:bg-blue-600 hover:text-white hover:border-blue-600 transition-all duration-150"><i class="fa-brands fa-instagram"></i></a>
+                        </div>
+                    </div>
+                </div>
+
+                <form class="lg:col-span-7 space-y-6" onsubmit="event.preventDefault(); alert('Message sent simulated!');">
+                    <div class="grid grid-cols-1 sm:grid-cols-2 gap-6">
+                        <div>
+                            <label class="block text-xs font-bold text-slate-400 uppercase tracking-wider mb-2">Your Name</label>
+                            <input type="text" required class="w-full bg-slate-950 border border-slate-800 rounded-xl px-4 py-3 text-white focus:outline-none focus:border-blue-500 transition-colors">
+                        </div>
+                        <div>
+                            <label class="block text-xs font-bold text-slate-400 uppercase tracking-wider mb-2">Email Address</label>
+                            <input type="email" required class="w-full bg-slate-950 border border-slate-800 rounded-xl px-4 py-3 text-white focus:outline-none focus:border-blue-500 transition-colors">
+                        </div>
+                    </div>
+                    <div>
+                        <label class="block text-xs font-bold text-slate-400 uppercase tracking-wider mb-2">Subject Context</label>
+                        <select class="w-full bg-slate-950 border border-slate-800 rounded-xl px-4 py-3 text-slate-300 focus:outline-none focus:border-blue-500 transition-colors">
+                            <option class="bg-navy-900">Let's build a software/web solution</option>
+                            <option class="bg-navy-900">Discuss books or habit frameworks</option>
+                            <option class="bg-navy-900">Futsal or cycling invite</option>
+                            <option class="bg-navy-900">Just saying hi!</option>
+                        </select>
+                    </div>
+                    <div>
+                        <label class="block text-xs font-bold text-slate-400 uppercase tracking-wider mb-2">Message Description</label>
+                        <textarea rows="5" required class="w-full bg-slate-950 border border-slate-800 rounded-xl px-4 py-3 text-white focus:outline-none focus:border-blue-500 transition-colors"></textarea>
+                    </div>
+                    <button type="submit" class="w-full sm:w-auto px-6 py-3 bg-blue-600 text-white font-medium rounded-xl hover:bg-blue-500 transition-colors shadow-lg shadow-blue-600/10">
+                        Send Secure Message <i class="fa-solid fa-paper-plane ml-2 text-xs"></i>
+                    </button>
+                </form>
+            </div>
+        </div>
+
     </main>
 
-    <footer id="contact">
-        <div class="container">
-            <h4 class="class=" wow animate__animated animate__fadeInUp"">Contact</h4>
-
-            <p class="class=" wow animate__animated animate__fadeInUp"">Seasoned Full Stack Software Engineer with over
-                8 years of hands-on experience in designing
-                and implementing robust, scalable, and innovative web solutions. Adept at leveraging a
-                comprehensive skill set encompassing front-end and back-end technologies </p>
-
-            <a href="mailto:binaya.maharjan.dev@gmail.com" class="email class=" wow animate__animated
-                animate__fadeInUp""><i data-feather="mail"></i></span>binaya.maharjan.dev@gmail.com</a>
-
-            <ul class="social-icons class=" wow animate__animated animate__fadeInUp"">
-                <li><a href="#"><i data-feather="instagram"></i></a></li>
-                <li><a href=""><i data-feather="x"></i></a></li>
-                <li><a href=""><i data-feather="youtube"></i></a></li>
-            </ul>
+    <footer class="bg-slate-950 text-slate-500 py-12 border-t border-slate-900">
+        <div class="max-w-6xl mx-auto px-4 sm:px-6 lg:px-8 flex flex-col sm:flex-row items-center justify-between gap-6">
+            <p class="text-sm">
+                &copy; 2026 Developer &amp; Hobbyist. Engineered with care using dark Tailwind aesthetics.
+            </p>
+            <div class="flex items-center gap-6 text-sm">
+                <button @click="activeTab = 'home'; window.scrollTo(0,0)" class="hover:text-slate-300 transition-colors">Top</button>
+                <button @click="activeTab = 'journal'; window.scrollTo(0,0)" class="hover:text-slate-300 transition-colors">Journal Archive</button>
+                <a href="https://www.buymeacoffee.com" target="_blank" class="text-coffee font-semibold hover:underline">Support on BMC</a>
+            </div>
         </div>
     </footer>
-    <script src="assets/js/app.js"></script>
-</body>
 
+</body>
 </html>
