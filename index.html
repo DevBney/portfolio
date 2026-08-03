@@ -89,20 +89,22 @@
     <main class="min-h-[calc(100vh-16rem)]">
 
         <div x-show="activeTab === 'home'" x-transition.opacity.duration.300ms class="animate-fade-in">
-            
+
             <section class="relative overflow-hidden bg-gradient-to-b from-navy-950 via-navy-900 to-navy-950 py-20 lg:py-32">
                 <div class="max-w-6xl mx-auto px-4 sm:px-6 lg:px-8 relative z-10">
                     <div class="grid grid-cols-1 lg:grid-cols-12 gap-12 items-center">
+                        
+                        <!-- Left Text Content -->
                         <div class="lg:col-span-7 text-center lg:text-left">
                             <span class="inline-flex items-center gap-1.5 px-3 py-1 rounded-full text-sm font-medium bg-blue-950/60 border border-blue-800/50 text-blue-300 mb-6">
                                 <span class="w-2 h-2 rounded-full bg-blue-400 animate-ping"></span> Available for projects
                             </span>
                             <h1 class="text-4xl sm:text-5xl lg:text-6xl font-extrabold text-white tracking-tight leading-tight mb-6">
-                                I <span class="bg-gradient-to-r from-blue-400 to-cyan-400 bg-clip-text text-transparent">build</span> for the Web</span><br/>
-                                & <span class="bg-gradient-to-r from-blue-400 to-cyan-400 bg-clip-text text-transparent">live</span> for the in-betweeens.
+                                I <span class="bg-gradient-to-r from-blue-400 to-cyan-400 bg-clip-text text-transparent">build</span> for the Web<br/>
+                                & <span class="bg-gradient-to-r from-blue-400 to-cyan-400 bg-clip-text text-transparent">live</span> for the in-betweens.
                             </h1>
                             <p class="text-lg text-slate-400 max-w-xl mx-auto lg:mx-0 mb-8 leading-relaxed">
-                                I'm a professional Web Developer who thrives on clean lines of code, but lives for rugged trails, capturing frames, turning pages, and hitting the futsal pitch. 
+                                I'm a professional Web Developer who thrives on clean lines of code, but lives for rugged trails, capturing frames, turning pages, and hitting the futsal pitch.
                             </p>
                             <div class="flex flex-col sm:flex-row justify-center lg:justify-start gap-4">
                                 <button @click="activeTab = 'journal'" class="px-6 py-3 bg-blue-600 text-white font-medium rounded-xl hover:bg-blue-500 shadow-lg shadow-blue-600/20 hover:shadow-blue-600/30 -translate-y-0.5 active:translate-y-0 transition-all duration-150">
@@ -114,26 +116,21 @@
                             </div>
                         </div>
                         
+                        <!-- Right Hero Image Display -->
                         <div class="lg:col-span-5 relative flex justify-center">
-                            <div class="relative w-72 h-72 sm:w-80 sm:h-80 md:w-96 md:h-96">
-                                <div class="absolute inset-0 bg-gradient-to-tr from-blue-600 to-indigo-600 rounded-3xl rotate-6 scale-95 opacity-20 blur-2xl animate-bounce-slow"></div>
-                                <div class="absolute inset-0 bg-navy-900 p-4 rounded-3xl shadow-2xl border border-slate-800 rotate-[-2deg] hover:rotate-0 transition-transform duration-500">
-                                    <div class="w-full h-full bg-slate-950 rounded-2xl overflow-hidden flex flex-col justify-between p-6 text-cyan-400 font-mono text-sm shadow-inner">
-                                        <div>
-                                            <p class="text-slate-600">// Personal Stack</p>
-                                            <p><span class="text-pink-400">const</span> hobbyist = {</p>
-                                            <p class="pl-4">role: <span class="text-amber-300">"Web Developer"</span>,</p>
-                                            <p class="pl-4">loves: [<span class="text-amber-300">"Cycling"</span>, <span class="text-amber-300">"Books"</span>, <span class="text-amber-300">"Basketball", "Hiking</span>],</p>
-                                            <p class="pl-4">camera: <span class="text-amber-300">"Mirrorless"</span></p>
-                                            <p>};</p>
-                                        </div>
-                                        <div class="text-right text-slate-600 text-xs">
-                                            Status: Active Outdoor ☕
-                                        </div>
+                            <div class="relative w-full max-w-md aspect-[4/5] rounded-3xl p-2 bg-gradient-to-b from-slate-800 to-navy-900 border border-slate-700/60 shadow-2xl overflow-hidden group">
+                                <div class="absolute inset-0 bg-gradient-to-tr from-blue-600/20 to-cyan-500/10 opacity-50 group-hover:opacity-75 transition-opacity duration-300 z-10 pointer-events-none"></div>
+                                <img src="img/profile.jpg" alt="Binaya Profile" class="w-full h-full object-cover rounded-2xl object-top group-hover:scale-105 transition-transform duration-500">
+                                <div class="absolute bottom-4 left-4 right-4 bg-navy-950/80 backdrop-blur-md p-3 rounded-xl border border-slate-800 z-20 flex justify-between items-center">
+                                    <div>
+                                        <p class="text-xs font-mono text-cyan-400">// Full-Stack Developer</p>
+                                        <p class="text-xs text-slate-300 font-medium">Binaya Maharjan</p>
                                     </div>
+                                    <span class="text-xs font-semibold px-2.5 py-1 rounded-md bg-blue-600/30 border border-blue-500/40 .text-blue-300">Active</span>
                                 </div>
                             </div>
                         </div>
+
                     </div>
                 </div>
             </section>
